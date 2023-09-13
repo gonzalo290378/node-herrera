@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const { dbMongoose }  = require('../database/config')
 
 class Server {
 
@@ -7,13 +8,27 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    this.usuariosPath = '/api/usuarios';
+
+    this.paths = {
+      'usuarios': '/api/usuarios',
+      'auth' : '/api/auth',
+      'categorias': '/api/categorias',
+      'productos': '/api/productos',
+    }
+
+    //Conexion a la base de datos
+    this.conectarDb();
 
     //Middlewares: Funciones que adhieren otra funcionalidad a mi Server
     this.middlewares();
 
     //Rutas de mi aplicacion
     this.routes();
+  }
+
+  
+  async conectarDb () {
+    await dbMongoose();
   }
 
   middlewares() {
@@ -36,7 +51,18 @@ class Server {
 
   //Rutas de mi aplicacion y CRUD
   routes() {
-    this.app.use(this.usuariosPath, require('../routes/usuarios'));
+    //Ruta del CRUD de usuarios
+    this.app.use(this.paths.usuarios, require('../routes/usuarios'));
+
+    //Ruta de autenticacion
+    this.app.use(this.paths.auth, require('../routes/auth'));
+
+    //Ruta de categorias
+    this.app.use(this.paths.categorias, require('../routes/categorias'));
+
+    //Ruta de productos
+    this.app.use(this.paths.productos, require('../routes/productos'));
+
   }
 
   listen() {
