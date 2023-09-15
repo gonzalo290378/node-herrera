@@ -14,6 +14,7 @@ class Server {
       'auth' : '/api/auth',
       'categorias': '/api/categorias',
       'productos': '/api/productos',
+      'buscar' : '/api/buscar'
     }
 
     //Conexion a la base de datos
@@ -62,6 +63,9 @@ class Server {
 
     //Ruta de productos
     this.app.use(this.paths.productos, require('../routes/productos'));
+
+    //Ruta de buscador
+    this.app.use(this.paths.buscar, require('../routes/buscar'));
 
   }
 

@@ -43,7 +43,10 @@ router.delete("/:id", [
   validarJWT,
 
   //Validacion si el rol es ADMIN
-  esAdminRole,
+  //esAdminRole,
+
+  //Explicacion en la carpeta
+  tieneRole('ADMIN_ROLE', 'VENTAR_ROLE','OTRO_ROLE'),
 
   check("id", "No es un id valido").isMongoId(), 
   check("id").custom( (id ) => existeUsuarioPorId(id)),

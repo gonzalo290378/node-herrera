@@ -5,7 +5,7 @@ const Producto = require("../models/producto");
 const obtenerProductos = async (req = request, res= response) => {
     const {limite = 5, desde = 0} = req.query;
     const productos = await Producto.find({estado: true})
-        .populate('producto' , 'nombre')
+        .populate('usuario' , 'nombre')
         .populate('categoria' , 'nombre')
         .skip(Number(desde))
         .limit(Number(limite));
@@ -31,7 +31,7 @@ const obtenerProductos = async (req = request, res= response) => {
 const obtenerProducto = async (req = request, res= response) => {
     const { id, ...data } = req.params;
     const producto = await Producto.findById(id, data, {estado :true})
-        .populate('producto', 'nombre')
+        .populate('usuario', 'nombre')
         .populate('categoria', 'nombre');
 
     return res.json({

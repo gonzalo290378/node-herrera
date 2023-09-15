@@ -25,14 +25,15 @@ const existeEmail = async (correo = "") => {
 
   const existeCategoria = async ( id ) => {
     const existe = await Categoria.findById(id);
+    console.log(existe);
     if( !existe ){
       throw new Error("La categoria no existe");
     }
   }
 
   const existeProducto = async ( id ) => {
-    const existe = await Producto.findById(id);
-    if( !existe ){
+    const existeProductoPorId = await Producto.findById(id);
+    if( !existeProductoPorId ){
       throw new Error("El producto no existe");
     }
   }

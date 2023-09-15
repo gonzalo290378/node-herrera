@@ -9,7 +9,6 @@ const router = Router();
 //ObtenerProductos
 router.get("/", obtenerProductos)
 
-
 //Obtener un producto
 router.get("/:id", [
     check("id", "No es un id valido").isMongoId(),
@@ -24,7 +23,6 @@ router.post("/", [
     validarJWT,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('categoria', 'No es un id de Mongo').isMongoId(),
-    check('id').custom( (id ) => existeProducto(id) ),
     validarCampos,
 ],
 crearProducto,
